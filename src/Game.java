@@ -2,6 +2,7 @@ import commands.Command;
 import commands.CommandWord;
 import entities.Player;
 import map.Location;
+import map.Map;
 
 import java.util.Scanner;
 
@@ -30,6 +31,9 @@ public class Game {
      * Game Loop.
      */
     public void play() {
+        Map map = new Map();
+        startLocation = map.createRooms();
+
         Scanner read = new Scanner(System.in);
         System.out.println("Digite o nome do jogador: ");
         String playerName = read.nextLine();
@@ -37,6 +41,8 @@ public class Game {
         currentPlayer.setCurrentRoom(this.startLocation);
 
         this.printWelcome();
+
+        map.printMap();
 
         boolean finished = false;
         while (!finished) {
@@ -177,7 +183,7 @@ public class Game {
         if (!currentPlayer.dropItem(itemName)) {
             System.out.println("...");
         } else {
-            System.out.println(itemName + " foi largado em " + currentPlayer.getCurrentRoom().getName());
+            System.out.println(itemName + " foi largado em " + currentPlayer.getCurrentRoom().getDescription());
         }
     }
 

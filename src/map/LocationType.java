@@ -1,11 +1,11 @@
 package map;
 
-public enum RoomType {
+public enum LocationType {
     HALLWAY("Corredor"), ROOM("Quarto"), LIVING_ROOM("Sala de estar"), BATHROOM("Banheiro"), BALCONY("Varanda");
 
     String type;
 
-    RoomType(String type) {
+    LocationType(String type) {
         this.type = type;
     }
 

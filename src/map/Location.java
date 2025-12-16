@@ -10,10 +10,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Location {
-    protected String name;
     protected String description;
-    protected HashMap<String, Location> exits; // Armazena as saídas desta sala
-    protected Set<Item> items;             // Armazena os itens presentes na sala
+    protected Set<Item> items; // Armazena os itens presentes na sala
+
+    protected int id;
+    protected Set<String> tiles;
+    protected Set<String> doors;
 
     protected int minTiles;
     protected int maxTiles;
@@ -21,27 +23,22 @@ public class Location {
     protected int minQuantity;
     protected int maxQuantity;
 
+    protected LocationType type;
     protected Set<PhantomType> availablePhantoms;
     protected Phantom phantom;
 
-    /**
-     * Cria uma sala descrita pela "description". Inicialmente, não tem saídas.
-     * "description" é algo como "uma cozinha" ou "um pátio aberto".
-     *
-     * @param description A descrição da sala.
-     */
-    public Location(String name, String description) {
-        this.description = description;
-        this.exits = new HashMap<>();
+    public Location() {
         this.items = new HashSet<>();
         this.availablePhantoms = new HashSet<>();
+        this.tiles = new HashSet<>();
+        this.doors = new HashSet<>();
     }
 
     /**
      * Retorna a sala que fica numa determinada direção.
      */
     public Location getExit(String direction) {
-        return exits.get(direction);
+        return null;
     }
 
     /**
@@ -50,8 +47,8 @@ public class Location {
      * @param direction A direção da saída (ex: "norte").
      * @param neighbor  A sala para a qual a direção leva.
      */
-    public void setExit(String direction, Location neighbor) {
-        exits.put(direction, neighbor);
+    public void setExit(Direction direction, Location neighbor) {
+        // ...
     }
 
     /**
@@ -120,14 +117,8 @@ public class Location {
      */
     public String getLongDescription() {
         // TODO: Implementar método.
-        throw new UnsupportedOperationException("Método 'getLongDescription' ainda não implementado.");
-    }
-
-    /**
-     * Retorna o nome da sala (se tiver sido definido).
-     */
-    public String getName() {
-        return this.name;
+//        throw new UnsupportedOperationException("Método 'getLongDescription' ainda não implementado.");
+        return "";
     }
 
     /**
@@ -144,5 +135,86 @@ public class Location {
      */
     public boolean containsPhantom() {
         return (phantom != null);
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+
+    public void setItems(Set<Item> items) {
+        this.items = items;
+    }
+
+    public Set<String> getTiles() {
+        return tiles;
+    }
+
+    public void setTiles(Set<String> tiles) {
+        this.tiles = tiles;
+    }
+
+    public Set<String> getDoors() {
+        return doors;
+    }
+
+    public void addDoor(String tile) {
+        this.doors.add(tile);
+    }
+
+    public void setDoors(Set<String> doors) {
+        this.doors = doors;
+    }
+
+    public int getMinTiles() {
+        return minTiles;
+    }
+
+    public void setMinTiles(int minTiles) {
+        this.minTiles = minTiles;
+    }
+
+    public int getMaxTiles() {
+        return maxTiles;
+    }
+
+    public void setMaxTiles(int maxTiles) {
+        this.maxTiles = maxTiles;
+    }
+
+    public int getMinQuantity() {
+        return minQuantity;
+    }
+
+    public void setMinQuantity(int minQuantity) {
+        this.minQuantity = minQuantity;
+    }
+
+    public int getMaxQuantity() {
+        return maxQuantity;
+    }
+
+    public void setMaxQuantity(int maxQuantity) {
+        this.maxQuantity = maxQuantity;
+    }
+
+    public LocationType getType() {
+        return type;
+    }
+
+    public void setType(LocationType type) {
+        this.type = type;
+    }
+
+    public Set<PhantomType> getAvailablePhantoms() {
+        return availablePhantoms;
+    }
+
+    public void setAvailablePhantoms(Set<PhantomType> availablePhantoms) {
+        this.availablePhantoms = availablePhantoms;
+    }
+
+    public void setPhantom(Phantom phantom) {
+        this.phantom = phantom;
     }
 }
