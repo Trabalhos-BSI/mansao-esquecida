@@ -1,4 +1,4 @@
-package map;
+package locations;
 
 public enum LocationType {
     HALLWAY("Corredor"), ROOM("Quarto"), LIVING_ROOM("Sala de estar"), BATHROOM("Banheiro"), BALCONY("Varanda");

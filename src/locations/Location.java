@@ -1,11 +1,10 @@
-package map;
+package locations;
 
 import entities.Phantom;
 import entities.PhantomType;
 import items.Item;
 
 import java.util.Iterator;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 

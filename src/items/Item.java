@@ -1,5 +1,9 @@
 package items;
 
+
+/**
+ * @author Enzo
+ */
 public class Item {
     private String name;
     private String description;
