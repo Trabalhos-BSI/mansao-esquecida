@@ -1,8 +1,11 @@
-package map;
+package locations;
 
 import java.util.Arrays;
 import java.util.HashMap;
 
+/**
+ * @author Davi
+ */
 public class Map {
     private final int ASCII_A = 65;
     private final int ASCII_1 = 49;
@@ -13,7 +16,7 @@ public class Map {
 
     public Map() {
         this.locations = new HashMap<>();
-        this.map = new Integer[11][5];
+        this.map = new Integer[10][5];
 
         this.createRooms();
     }
@@ -25,7 +28,7 @@ public class Map {
      * @param doors       "A1, B2"
      */
     public void createRoom(LocationType type, String description, String tiles, String doors) {
-        int id = this.locations.size() + 1;
+        int id = this.locations.size();
 
         Location room = switch (type) {
             case HALLWAY -> null;

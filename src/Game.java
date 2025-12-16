@@ -1,8 +1,8 @@
 import commands.Command;
 import commands.CommandWord;
 import entities.Player;
-import map.Location;
-import map.Map;
+import locations.Location;
+import locations.Map;
 
 import java.util.Scanner;
 

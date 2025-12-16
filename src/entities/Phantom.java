@@ -2,6 +2,9 @@ package entities;
 
 import java.util.HashMap;
 
+/**
+ * @author Athos
+ */
 public class Phantom {
     protected String name;
     protected PhantomType type;

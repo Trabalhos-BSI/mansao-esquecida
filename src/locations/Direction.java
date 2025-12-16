@@ -1,4 +1,4 @@
-package map;
+package locations;
 
 public enum Direction {
     FRONT("frente"), BACK("trás"), LEFT("esquerda"), RIGHT("direita"), ;

@@ -1,22 +1,8 @@
 package commands;
 
 /**
- * Esta classe faz parte da aplicação "World of Zuul". 
- * "World of Zuul" é um jogo de aventura muito simples, baseado em texto.  
- *
- * Esta classe guarda informações sobre um comando que foi emitido pelo utilizador.
- * Um comando consiste atualmente em duas strings: uma palavra de comando e uma segunda
- * palavra (por exemplo, se o comando fosse "pegar mapa", as duas strings
- * seriam obviamente "pegar" e "mapa").
- * * A forma como isto é usado é: Os comandos já são verificados para garantir que são palavras
- * de comando válidas. Se o utilizador inseriu um comando inválido (uma palavra que não é
- * conhecida), então a palavra de comando é <null>.
- *
- * Se o comando tinha apenas uma palavra, então a segunda palavra é <null>.
- * @author  Michael Kolling and David J. Barnes
- * @version 2008.03.30
+ * @author Guilherme
  */
-
 public class Command
 {
     private String commandWord;

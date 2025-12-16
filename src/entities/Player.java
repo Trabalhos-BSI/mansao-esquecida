@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
 
-import map.Location;
+import locations.Location;
 import items.Item;
 
 public class Player {

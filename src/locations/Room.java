@@ -1,8 +1,6 @@
-package map;
+package locations;
 
 import entities.PhantomType;
-
-import java.util.Set;
 
 public class Room extends Location {
 

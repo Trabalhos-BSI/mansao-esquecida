@@ -3,7 +3,7 @@ package items;
 import entities.FatPhantom;
 import entities.Phantom;
 import entities.PhantomType;
-import map.Location;
+import locations.Location;
 import entities.Player;
 
 public class Food extends Item implements UsableItem {
