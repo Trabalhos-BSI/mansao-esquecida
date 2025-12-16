@@ -29,7 +29,7 @@ public class Food extends Item implements UsableItem {
         if (!location.containsPhantom()) return false;
 
         Phantom phantom = location.getPhantom();
-        if (!phantom.getType().equals(PhantomType.HUNGRY)) return false;
+        if (!phantom.getType().equals(PhantomType.FAT)) return false;
 
         FatPhantom fatPhantom = (FatPhantom) phantom;
         return fatPhantom.give(this);
