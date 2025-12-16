@@ -32,7 +32,7 @@ public class Game {
      */
     public void play() {
         Map map = new Map();
-        startLocation = map.createRooms();
+        startLocation = map.createLocations();
 
         Scanner read = new Scanner(System.in);
         System.out.println("Digite o nome do jogador: ");

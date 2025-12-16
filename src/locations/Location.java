@@ -33,6 +33,16 @@ public class Location {
         this.doors = new HashSet<>();
     }
 
+    public static Location from(LocationType type) {
+        return switch (type) {
+            case HALLWAY -> null;
+            case ROOM -> new Room();
+            case LIVING_ROOM -> null;
+            case BATHROOM -> null;
+            case BALCONY -> null;
+        };
+    }
+
     /**
      * Retorna a sala que fica numa determinada direção.
      */

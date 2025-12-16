@@ -4,11 +4,8 @@ import entities.PhantomType;
 
 public class Room extends Location {
 
-    public Room(int id, String description) {
+    public Room() {
         super();
-        this.id = id;
-        this.description = description;
-
         this.type = LocationType.ROOM;
 
         this.availablePhantoms.add(PhantomType.SMART);
