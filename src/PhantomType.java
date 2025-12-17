@@ -1,4 +1,4 @@
-package entities;
+
 
 public enum PhantomType {
     SMART("Inteligente"), FIGHTER("Do Bronx"), FAT("Gordo");
