@@ -1,0 +1,99 @@
+import java.util.Iterator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+
+/**
+ * @author Davi
+ */
+public class Room {
+    private RoomType type;
+    private String description;
+    
+    private HashMap<RoomType, Room> exits;
+    private Set<Item> items;
+    private Phantom phantom;
+
+    public Room(RoomType type, String description) {
+        this.type = type;
+        this.description = description;
+
+        this.exits = new HashMap<>();
+        this.items = new HashSet<>();
+
+    }
+
+    /**
+     * Retorna a sala que fica numa determinada direção.
+     */
+    public Room getExit(RoomType roomType) {
+        return this.exits.get(roomType);
+    }
+
+    /**
+     * Define uma saída desta sala.
+     *
+     * @param roomType O tipo da saída (ex: "norte").
+     * @param room  A sala para a qual a direção leva.
+     */
+    public void setExit(RoomType roomType, Room room) {
+        if (roomType != room.getType()) throw new IllegalArgumentException("O tipo de sala não bate.");
+
+        this.exits.put(roomType, room);
+
+        if (room.getExit(this.type) == null) {
+            room.setExit(this.type, this);
+        }
+    }
+
+    /**
+     * Adiciona um item à sala.
+     *
+     * @param item O item a ser adicionado.
+     */
+    public void addItem(Item item) {
+        if (item != null) {
+            items.add(item);
+        }
+    }
+
+    /**
+     * Procura um item pelo nome, remove-o da sala e retorna-o.
+     * É usado quando o jogador "pega" o item.
+     *
+     * @param name O nome do item a procurar.
+     * @return O objeto items.Item se for encontrado, ou null se não existir.
+     */
+    public Item getItem(String name) {
+        Iterator<Item> itemsIterator = items.iterator();
+        while (itemsIterator.hasNext()) {
+            Item item = itemsIterator.next();
+            if (name.equals(item.getName())) {
+                itemsIterator.remove(); // Remove o item da sala ao pega-lo
+                return item;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Retorna se a sala possui um fantasma.
+     *
+     * @return true, se a sala tiver um fantasma, false, se a sala não tiver um fantasma.
+     */
+    public boolean containsPhantom() {
+        return (phantom != null);
+    }
+
+    public RoomType getType() {
+      return type;
+    }
+
+    public String getLongDescription() {
+        return this.exits.toString();
+    }
+
+    public Phantom getPhantom() {
+        return this.phantom;
+    }
+}

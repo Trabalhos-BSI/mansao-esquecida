@@ -1,5 +1,3 @@
-package commands;
-
 public enum CommandWord {
     UNKNOWN("?");
 

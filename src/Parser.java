@@ -1,6 +1,3 @@
-import commands.Command;
-import commands.CommandWords;
-
 import java.util.Scanner;
 
 /**

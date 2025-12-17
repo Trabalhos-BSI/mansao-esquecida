@@ -1,18 +1,13 @@
-package entities;
-
 import java.util.Iterator;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
 
-import locations.Location;
-import items.Item;
-
 public class Player {
     private final String name;
 
-    private Location currentLocation; // A sala atual.
-    private Stack<Location> locationPath; // O caminho percorrido até a sala atual.
+    private Room currentRoom; // A sala atual.
+    private Stack<Room> locationPath; // O caminho percorrido até a sala atual.
 
     private Set<Item> inventory; // Os itens que o jogador possui
 
@@ -34,7 +29,7 @@ public class Player {
      * @return true, se pegar o item, caso contrário, false.
      */
     public boolean takeItem(String itemName) {
-        Item item = this.currentLocation.getItem(itemName);
+        Item item = this.currentRoom.getItem(itemName);
         if (item != null) {
             this.inventory.add(item);
             return true;
@@ -54,7 +49,7 @@ public class Player {
             Item item = inventoryIterator.next();
             if (itemName.equals(item.getName())) {
                 inventoryIterator.remove();
-                currentLocation.addItem(item);
+                currentRoom.addItem(item);
                 return true;
             }
         }
@@ -67,9 +62,21 @@ public class Player {
      * @param itemName o nome do item presente no inventário do jogador
      * @return o item a ser utilizado
      */
-    public Item useItem(String itemName) {
-        // TODO: Implementar método.
-        throw new UnsupportedOperationException("Método 'useItem' ainda não implementado.");
+    public boolean useItem(String itemName) {
+        Iterator<Item> inventoryIterator = inventory.iterator();
+        while (inventoryIterator.hasNext()) {
+            Item item = inventoryIterator.next();
+            if (itemName.equals(item.getName())) {
+                if (item.use(this)) {
+                    if (item.getType() == ItemType.FOOD) {
+                        inventoryIterator.remove();
+                    }
+                    return true;
+                }
+                return false;
+            }
+        }
+        return false;
     }
 
     /**
@@ -77,7 +84,7 @@ public class Player {
      *
      * @param location a referência da sala para ser adicionada à pilha.
      */
-    public void registerRoom(Location location) {
+    public void registerRoom(Room location) {
         if (location == null) return;
         this.locationPath.push(location);
     }
@@ -85,17 +92,15 @@ public class Player {
     /**
      * Leva o jogador até uma determinada sala.
      *
-     * @param location a sala para levar o jogador.
+     * @param room a sala para levar o jogador.
      * @return true, se ele entrar na sala, false, se não existir a sala.
      */
-    public boolean goRoom(String direction) {
-        if (direction == null) return false;
-
-        Location location = getCurrentRoom().getExit(direction);
+    public boolean goRoom(RoomType room) {
+        Room location = getCurrentRoom().getExit(room);
         if (location == null) return false;
 
-        this.registerRoom(currentLocation);
-        this.currentLocation = location;
+        this.registerRoom(currentRoom);
+        this.currentRoom = location;
         return true;
     }
 
@@ -106,22 +111,22 @@ public class Player {
      */
     public boolean backRoom() {
         if (locationPath.empty()) return false;
-        currentLocation = locationPath.pop();
+        currentRoom = locationPath.pop();
         return true;
     }
 
     /**
      * @return Retorna a sala atual do jogador
      */
-    public Location getCurrentRoom() {
-        return this.currentLocation;
+    public Room getCurrentRoom() {
+        return this.currentRoom;
     }
 
     /**
-     * @param currentLocation A referência para a sala atual.
+     * @param currentRoom A referência para a sala atual.
      */
-    public void setCurrentRoom(Location currentLocation) {
-        this.currentLocation = currentLocation;
+    public void setCurrentRoom(Room currentRoom) {
+        this.currentRoom = currentRoom;
     }
 
     /**
@@ -141,14 +146,14 @@ public class Player {
     /**
      * @return A pilha de caminhos percorrido pelo jogador.
      */
-    public Stack<Location> getRoomPath() {
+    public Stack<Room> getRoomPath() {
         return locationPath;
     }
 
     /**
      * @param locationPath Os caminhos percorridos
      */
-    public void setRoomPath(Stack<Location> locationPath) {
+    public void setRoomPath(Stack<Room> locationPath) {
         this.locationPath = locationPath;
     }
 }

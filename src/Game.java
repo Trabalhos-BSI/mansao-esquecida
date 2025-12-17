@@ -1,15 +1,9 @@
-import commands.Command;
-import commands.CommandWord;
-import entities.Player;
-import locations.Location;
-import locations.Map;
-
 import java.util.Scanner;
 
 public class Game {
     private final Parser parser;
     private Player currentPlayer;
-    private Location startLocation;
+    private Room startRoom;
 
     /**
      * Cria o jogo e inicia o mapa.
@@ -24,25 +18,23 @@ public class Game {
      * Define a sala inicial que guarda a referência para outras salas.
      */
     private void createRooms() {
-        this.startLocation = null;
+        this.startRoom = null;
     }
 
     /**
      * Game Loop.
      */
     public void play() {
-        Map map = new Map();
-        startLocation = map.createRooms();
+        Mansion mansion = new Mansion();
+        startRoom = mansion.getInitialRoom();
 
         Scanner read = new Scanner(System.in);
         System.out.println("Digite o nome do jogador: ");
         String playerName = read.nextLine();
         currentPlayer = new Player(playerName);
-        currentPlayer.setCurrentRoom(this.startLocation);
+        currentPlayer.setCurrentRoom(this.startRoom);
 
         this.printWelcome();
-
-        map.printMap();
 
         boolean finished = false;
         while (!finished) {
@@ -56,13 +48,13 @@ public class Game {
      * Exibe a mensagem de abertura
      */
     private void printWelcome() {
-        printLocationInfo();
+        printRoomInfo();
     }
 
     /**
      * Exibe as informações do local atual do player.
      */
-    private void printLocationInfo() {
+    private void printRoomInfo() {
         System.out.println(currentPlayer.getCurrentRoom().getLongDescription());
     }
 
@@ -109,12 +101,20 @@ public class Game {
             return;
         }
 
-        String direction = command.getSecondWord();
+        RoomType room = switch(command.getSecondWord()) {
+            case "quarto" -> RoomType.ROOM;
+            case "cozinha" -> RoomType.KITCHEN;
+            case "banheiro" -> RoomType.BATHROOM;
+            case "corredor" -> RoomType.HALLWAY;
+            case "sala" -> RoomType.LIVING_ROOM;
+            case "escadas" -> RoomType.STAIRS;
+            default -> RoomType.UNKNOWN;
+        };
 
-        if (!currentPlayer.goRoom(direction)) {
-            System.out.println("Isso não é uma sala!");
+        if (room == RoomType.UNKNOWN || !currentPlayer.goRoom(room)) {
+            System.out.println("Isso não é um cômodo!");
         } else {
-            printLocationInfo();
+            printRoomInfo();
         }
     }
 
@@ -145,7 +145,7 @@ public class Game {
      */
     private void backRoom() {
         if (currentPlayer.backRoom()) {
-            printLocationInfo();
+            printRoomInfo();
         } else {
             System.out.println("Não há salas para voltar.");
         }
@@ -183,7 +183,7 @@ public class Game {
         if (!currentPlayer.dropItem(itemName)) {
             System.out.println("...");
         } else {
-            System.out.println(itemName + " foi largado em " + currentPlayer.getCurrentRoom().getDescription());
+            System.out.println(itemName + " foi largado em " + currentPlayer.getCurrentRoom().getLongDescription());
         }
     }
 

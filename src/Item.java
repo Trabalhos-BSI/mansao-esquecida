@@ -1,5 +1,3 @@
-package items;
-
 
 /**
  * @author Enzo
@@ -10,14 +8,16 @@ public class Item {
     private ItemType type;
 
     /**
-     * Construtor - Inicializa o objeto com nome, descrição e peso.
+     * Construtor - Inicializa o objeto com nome, descrição e tipo.
      *
      * @param name        o nome do item.
      * @param description a descrição do item.
+     * @param type        o tipo do item.
      */
-    public Item(String name, String description) {
+    public Item(String name, String description, ItemType type) {
         this.name = name;
         this.description = description;
+        this.type = type;
     }
 
     /**
@@ -43,5 +43,23 @@ public class Item {
 
     public ItemType getType() {
         return type;
+    }
+    
+    /**
+     * Utiliza o item.
+     * @param player O jogador que está usando o item.
+     * @return true se o uso foi bem sucedido.
+     */
+    public boolean use(Player player) {
+        // Lógica unificada de uso
+        if (this.type == ItemType.FOOD) {
+             Room room = player.getCurrentRoom();
+             if (room != null && room.containsPhantom()) {
+                 Phantom phantom = room.getPhantom();
+                 return phantom.interact(this);
+             }
+        }
+        
+        return false;
     }
 }
