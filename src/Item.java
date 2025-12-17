@@ -44,22 +44,34 @@ public class Item {
     public ItemType getType() {
         return type;
     }
-    
+
     /**
      * Utiliza o item.
+     *
      * @param player O jogador que está usando o item.
      * @return true se o uso foi bem sucedido.
      */
     public boolean use(Player player) {
         // Lógica unificada de uso
         if (this.type == ItemType.FOOD) {
-             Room room = player.getCurrentRoom();
-             if (room != null && room.containsPhantom()) {
-                 Phantom phantom = room.getPhantom();
-                 return phantom.interact(this);
-             }
+            Room room = player.getCurrentRoom();
+            if (room != null && room.containsPhantom()) {
+                Phantom phantom = room.getPhantom();
+                return phantom.interact(this);
+            }
         }
-        
+        if (this.type == ItemType.KEY) {
+            Room room = player.getCurrentRoom();
+            if (room != null && room.getExit(RoomType.STAIRS) != null) {
+                // Desbloquear quarto
+                return true;
+            }
+        }
+        if (this.type == ItemType.PICTURE || this.type == ItemType.DIARY ) {
+            System.out.println(this.description);
+        }
+
+
         return false;
     }
 }
