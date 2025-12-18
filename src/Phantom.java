@@ -40,8 +40,12 @@ public class Phantom {
                 this.whoCapture = "Você pode capturar esse fantasma lhe dando comida.";
                 break;
             case SMART:
+                this.introText = "${playerName} entra na ${location} e escuta uma voz dizendo:  \"Não é a força que me mantém aqui, é o que vocês nunca conseguiram entender...\".";
+                this.whoCapture = "Você pode capturar esse fantasma resolvendo um cálculo matemático.";
                 break;
             case FIGHTER:
+                this.introText = "${playerName} entra na ${location} e escuta uma voz dizendo:  \"A luta é tudo o que restou de mim...\".";
+                this.whoCapture = "Você pode capturar esse fantasma com o aspirador de fantasma.";
                 break;
         }
     }
