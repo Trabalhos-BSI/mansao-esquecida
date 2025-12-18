@@ -4,19 +4,35 @@ import java.util.HashMap;
  * @author Athos
  */
 public class Phantom {
-    protected String name;
-    protected PhantomType type;
+    private String name;
+    private PhantomType type;
+    private Interactions interactions;
 
-    protected boolean captured;
+    private boolean captured;
 
-    protected String introText;
-    protected String whoCapture;
+    private String introText;
+    private String whoCapture;
 
     public Phantom(String name, PhantomType type) {
+        init(name, type);
+        this.interactions = new Interactions(this);
+    }
+
+    public Phantom(String name, PhantomType type, ItemType itemType) {
+        init(name, type);
+        this.interactions = new Interactions(this, itemType);
+    }
+
+    public Phantom(String name, PhantomType type, String puzzle, String correctResponse) {
+        init(name, type);
+        this.interactions = new Interactions(this, puzzle, correctResponse);
+    }
+
+    private void init(String name, PhantomType type) {
         this.name = name;
         this.type = type;
         this.captured = false;
-        
+
         // Configurações baseadas no tipo
         switch (type) {
             case FAT:
@@ -28,29 +44,6 @@ public class Phantom {
             case FIGHTER:
                 break;
         }
-    }
-
-    public boolean interact(Item item) {
-        if (item == null) return false;
-        if (captured) return false;
-
-        boolean success = false;
-        switch (type) {
-            case FAT:
-                if (item.getType() == ItemType.FOOD) {
-                    success = true;
-                }
-                break;
-            case SMART:
-                break;
-            case FIGHTER:
-                break;
-        }
-
-        if (success) {
-            this.captured = true;
-        }
-        return success;
     }
 
     public PhantomType getType() {
