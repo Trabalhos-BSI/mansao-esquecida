@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Game {
@@ -5,12 +6,15 @@ public class Game {
     private Player currentPlayer;
     private Room startRoom;
 
+    private HashMap<String, String> replace;
+
     /**
      * Cria o jogo e inicia o mapa.
      */
     public Game() {
         createRooms();
         parser = new Parser();
+        replace = new HashMap<>();
     }
 
     /**
@@ -28,11 +32,14 @@ public class Game {
         Mansion mansion = new Mansion();
         startRoom = mansion.getInitialRoom();
 
-        Scanner read = new Scanner(System.in);
         System.out.println("Digite o nome do jogador: ");
-        String playerName = read.nextLine();
+        String playerName = parser.getLine();
+
         currentPlayer = new Player(playerName);
         currentPlayer.setCurrentRoom(this.startRoom);
+
+        replace.put("playerName", currentPlayer.getName());
+        replace.put("room", currentPlayer.getCurrentRoom().getType().toString());
 
         this.printWelcome();
 
@@ -55,7 +62,7 @@ public class Game {
      * Exibe as informações do local atual do player.
      */
     private void printRoomInfo() {
-        System.out.println(currentPlayer.getCurrentRoom().getLongDescription());
+        System.out.println(currentPlayer.getCurrentRoom().getLongDescription(replace));
     }
 
     /**
@@ -68,15 +75,20 @@ public class Game {
         boolean wantToQuit = false;
 
         CommandWord commandWord = command.getCommandWord();
-        System.out.println(commandWord);
         switch (commandWord) {
-            case CommandWord.UNKNOWN -> System.out.println("Não entendi o que você quis dizer...");
+            case ENTER -> goRoom(command);
+            case BACK -> backRoom();
+            case INTERACT -> interact(command);
+            case TAKE -> takeItem(command);
+            case DROP -> dropItem(command);
+            case LOOK -> lookRoom();
+            case QUIT -> wantToQuit = quit(command);
+            case HELP -> printHelp();
+            case UNKNOWN -> System.out.println("Não entendi o que você quis dizer...");
         }
 
         return wantToQuit;
     }
-
-    // implementations of user commands:
 
     /**
      * Exibe os comandos disponíveis.
@@ -96,24 +108,24 @@ public class Game {
      */
     private void goRoom(Command command) {
         if (!command.hasSecondWord()) {
-            // Exige uma segunda palavra para saber aonde ir
             System.out.println("Ir onde?");
             return;
         }
 
-        RoomType room = switch(command.getSecondWord()) {
-            case "quarto" -> RoomType.ROOM;
-            case "cozinha" -> RoomType.KITCHEN;
-            case "banheiro" -> RoomType.BATHROOM;
-            case "corredor" -> RoomType.HALLWAY;
-            case "sala" -> RoomType.LIVING_ROOM;
-            case "escadas" -> RoomType.STAIRS;
-            default -> RoomType.UNKNOWN;
-        };
+        HashMap<String, RoomType> roomTypeHashMap = new HashMap<>();
+        roomTypeHashMap.put(RoomType.ROOM.toString(), RoomType.ROOM);
+        roomTypeHashMap.put(RoomType.KITCHEN.toString(), RoomType.KITCHEN);
+        roomTypeHashMap.put(RoomType.BATHROOM.toString(), RoomType.BATHROOM);
+        roomTypeHashMap.put(RoomType.HALLWAY.toString(), RoomType.HALLWAY);
+        roomTypeHashMap.put(RoomType.LIVING_ROOM.toString(), RoomType.LIVING_ROOM);
+        roomTypeHashMap.put(RoomType.BALCONY.toString(), RoomType.BALCONY);
+        roomTypeHashMap.put(RoomType.STAIRS.toString(), RoomType.STAIRS);
 
+        RoomType room = roomTypeHashMap.get(command.getSecondWord());
         if (room == RoomType.UNKNOWN || !currentPlayer.goRoom(room)) {
             System.out.println("Isso não é um cômodo!");
         } else {
+            replace.put("room", currentPlayer.getCurrentRoom().getType().toString());
             printRoomInfo();
         }
     }
@@ -137,7 +149,7 @@ public class Game {
      * Exibe as informações da sala atual do player.
      */
     private void lookRoom() {
-        System.out.println(currentPlayer.getCurrentRoom().getLongDescription());
+        System.out.println(currentPlayer.getCurrentRoom().getLongDescription(replace));
     }
 
     /**
@@ -183,12 +195,52 @@ public class Game {
         if (!currentPlayer.dropItem(itemName)) {
             System.out.println("...");
         } else {
-            System.out.println(itemName + " foi largado em " + currentPlayer.getCurrentRoom().getLongDescription());
+            System.out.println(itemName + " foi largado em " + currentPlayer.getCurrentRoom().getType().toString());
         }
     }
 
-    private void inventory() {
-        System.out.println("...");
+    public void interact(Command command) {
+        if (!currentPlayer.getCurrentRoom().containsPhantom()) {
+            System.out.println("Não há nada para interagir aqui.");
+            return;
+        }
+
+        Phantom phantom = currentPlayer.getCurrentRoom().getPhantom();
+        System.out.println(phantom.getWhoCapture());
+
+        switch (phantom.getType()) {
+            case SMART -> {
+                System.out.println(phantom.getInteractions().getPuzzle());
+
+                String response = "";
+                while (!phantom.getInteractions().checkPuzzle(response)) {
+                    response = parser.getLine();
+                    System.out.println("Você errou. Tente novamente.");
+                }
+                System.out.println("Fantasma capturado com sucesso!");
+            }
+            case FIGHTER -> {
+                // ...
+            }
+            case FAT -> {
+                System.out.println("Qual item deseja usar?");
+                String itemName = parser.getLine();
+
+                Item item = currentPlayer.useItem(itemName);
+
+                if (item == null) {
+                    System.out.println("Item não encontrado.");
+                    return;
+                }
+
+                if (!phantom.getInteractions().item(item)) {
+                    System.out.println("Esse item não pode ser utilizado para capturar esse fantasma.");
+                    currentPlayer.addItem(item);
+                } else {
+                    System.out.println("O fantasma foi capturado com sucesso!");
+                }
+            }
+        }
     }
 
     public static void main(String[] args) {

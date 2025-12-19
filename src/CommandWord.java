@@ -1,5 +1,5 @@
 public enum CommandWord {
-    UNKNOWN("?");
+    ENTER("entre"), BACK("voltar"), INTERACT("interagir"), HELP("ajuda"), TAKE("pegar"), DROP("largar"), LOOK("olhar"), QUIT("sair"), UNKNOWN("?");
 
     private String commandWord;
 

@@ -34,6 +34,12 @@ public class Mansion {
 
         Room stairs = new Room(RoomType.STAIRS, "...");
 
+        Phantom fat = new Phantom("Mabin Joo", PhantomType.FAT, ItemType.FOOD);
+        Phantom smart = new Phantom("Enzo", PhantomType.SMART, "Qual a cor do cavalo branco de Napoleão?", "Branco");
+        Phantom fighter = new Phantom("Do Brox", PhantomType.FIGHTER);
+
+        Item lettuce = new Item("alface", "Um alface bem verdinho", ItemType.FOOD);
+
         hallway1.setExit(RoomType.HALLWAY, hallway2);
         hallway1.setExit(RoomType.LIVING_ROOM, livingRoom);
 
@@ -49,6 +55,14 @@ public class Mansion {
         hallway4.setExit(RoomType.ROOM, room3);
 
         hallway4.setExit(RoomType.STAIRS, stairs);
+
+        livingRoom.setPhantom(fighter);
+
+        room2.setPhantom(smart);
+
+        kitchen.setPhantom(fat);
+
+        kitchen.addItem(lettuce);
 
         this.locations.addAll(Set.of(hallway1, hallway2, hallway3, hallway4, room1, room2, room3, livingRoom, bathroom, kitchen));
 

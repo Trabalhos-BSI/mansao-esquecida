@@ -22,6 +22,10 @@ public class Player {
         this.inventory = new HashSet<>();
     }
 
+    public String getName() {
+        return name;
+    }
+
     /**
      * Remove um item da sala atual e o adiciona ao inventário do player.
      *
@@ -62,21 +66,16 @@ public class Player {
      * @param itemName o nome do item presente no inventário do jogador
      * @return o item a ser utilizado
      */
-    public boolean useItem(String itemName) {
+    public Item useItem(String itemName) {
         Iterator<Item> inventoryIterator = inventory.iterator();
         while (inventoryIterator.hasNext()) {
             Item item = inventoryIterator.next();
             if (itemName.equals(item.getName())) {
-                if (item.use(this)) {
-                    if (item.getType() == ItemType.FOOD) {
-                        inventoryIterator.remove();
-                    }
-                    return true;
-                }
-                return false;
+                inventoryIterator.remove();
+                return item;
             }
         }
-        return false;
+        return null;
     }
 
     /**
@@ -155,5 +154,9 @@ public class Player {
      */
     public void setRoomPath(Stack<Room> locationPath) {
         this.locationPath = locationPath;
+    }
+
+    public void addItem(Item item) {
+        this.inventory.add(item);
     }
 }

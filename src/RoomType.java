@@ -1,7 +1,7 @@
 
 
 public enum RoomType {
-    HALLWAY("Corredor"), ROOM("Quarto"), LIVING_ROOM("Sala de estar"), BATHROOM("Banheiro"), BALCONY("Varanda"), KITCHEN("Cozinha"), STAIRS("Escada"), UNKNOWN("?");
+    HALLWAY("corredor"), ROOM("quarto"), LIVING_ROOM("sala"), BATHROOM("banheiro"), BALCONY("varanda"), KITCHEN("cozinha"), STAIRS("escada"), UNKNOWN("?");
 
     String type;
 
