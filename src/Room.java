@@ -9,7 +9,7 @@ import java.util.Set;
 public class Room {
     private RoomType type;
     private String description;
-    
+
     private HashMap<RoomType, Room> exits;
     private Set<Item> items;
     private Phantom phantom;
@@ -34,7 +34,7 @@ public class Room {
      * Define uma saída desta sala.
      *
      * @param roomType O tipo da saída (ex: "norte").
-     * @param room  A sala para a qual a direção leva.
+     * @param room     A sala para a qual a direção leva.
      */
     public void setExit(RoomType roomType, Room room) {
         if (roomType != room.getType()) throw new IllegalArgumentException("O tipo de sala não bate.");
@@ -86,14 +86,35 @@ public class Room {
     }
 
     public RoomType getType() {
-      return type;
+        return type;
     }
 
     public String getLongDescription() {
-        return this.exits.toString();
+        String out = "Você está em " + this.description + "\n\tSaídas: ";
+        Iterator<RoomType> exitsIterator = exits.keySet().iterator();
+        while (exitsIterator.hasNext()) {
+            RoomType exit = exitsIterator.next();
+            out += exit.toString() + (exitsIterator.hasNext() ? ", " : ".\n");
+        }
+
+        if (items.isEmpty()) {
+            out += "\tNão há itens na sala.\n";
+        } else {
+            out += "\tItems: ";
+            Iterator<Item> itemsIterator = this.items.iterator();
+            while (itemsIterator.hasNext()) {
+                Item item = itemsIterator.next();
+                out += item.getName() + (itemsIterator.hasNext() ? ", " : ".\n");
+            }
+        }
+        return out;
     }
 
     public Phantom getPhantom() {
         return this.phantom;
+    }
+
+    public void setPhantom(Phantom phantom) {
+        this.phantom = phantom;
     }
 }

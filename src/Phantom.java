@@ -33,19 +33,18 @@ public class Phantom {
         this.type = type;
         this.captured = false;
 
-        // Configurações baseadas no tipo
         switch (type) {
             case FAT:
-                this.introText = "${playerName} entra na ${room} e escuta uma voz dizendo:  \"Vou te comer, vou te comer, vou te comer...\".";
+                this.introText = "${playerName} entra em ${room} e escuta uma voz dizendo:  \"Vou te comer, vou te comer, vou te comer...\".";
                 this.whoCapture = "Você pode capturar esse fantasma lhe dando comida.";
                 break;
             case SMART:
-                this.introText = "${playerName} entra na ${location} e escuta uma voz dizendo:  \"Não é a força que me mantém aqui, é o que vocês nunca conseguiram entender...\".";
-                this.whoCapture = "Você pode capturar esse fantasma resolvendo um cálculo matemático.";
+                this.introText = "${playerName} entra em ${location} e escuta uma voz dizendo:  \"Não é a força que me mantém aqui, é o que vocês nunca conseguiram entender...\".";
+                this.whoCapture = "Você pode capturar esse fantasma resolvendo um enigma.";
                 break;
             case FIGHTER:
-                this.introText = "${playerName} entra na ${location} e escuta uma voz dizendo:  \"A luta é tudo o que restou de mim...\".";
-                this.whoCapture = "Você pode capturar esse fantasma com o aspirador de fantasma.";
+                this.introText = "${playerName} entra em ${location} e escuta uma voz dizendo:  \"A luta é tudo o que restou de mim...\".";
+                this.whoCapture = "Você pode capturar esse fantasma com um espelho.";
                 break;
         }
     }
@@ -96,5 +95,9 @@ public class Phantom {
 
     public void setWhoCapture(String whoCapture) {
         this.whoCapture = whoCapture;
+    }
+
+    public Interactions getInteractions() {
+        return interactions;
     }
 }

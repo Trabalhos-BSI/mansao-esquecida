@@ -40,7 +40,7 @@ public class Interactions {
      * @param response
      * @return
      */
-    public boolean puzzle(String response) {
+    public boolean checkPuzzle(String response) {
         if (PhantomType.SMART != phantom.getType()) return false;
         if (phantom.isCaptured()) return false;
         boolean result = response.equals(correctResponse);

@@ -52,14 +52,6 @@ public class Item {
      * @return true se o uso foi bem sucedido.
      */
     public boolean use(Player player) {
-        // Lógica unificada de uso
-        if (this.type == ItemType.FOOD) {
-            Room room = player.getCurrentRoom();
-            if (room != null && room.containsPhantom()) {
-                Phantom phantom = room.getPhantom();
-                return phantom.interact(this);
-            }
-        }
         if (this.type == ItemType.KEY) {
             Room room = player.getCurrentRoom();
             if (room != null && room.getExit(RoomType.STAIRS) != null) {

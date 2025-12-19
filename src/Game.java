@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Game {
@@ -29,7 +30,7 @@ public class Game {
         startRoom = mansion.getInitialRoom();
 
         Scanner read = new Scanner(System.in);
-        System.out.println("Digite o nome do jogador: ");
+        System.out.print("Digite o nome do jogador: ");
         String playerName = read.nextLine();
         currentPlayer = new Player(playerName);
         currentPlayer.setCurrentRoom(this.startRoom);
@@ -68,15 +69,19 @@ public class Game {
         boolean wantToQuit = false;
 
         CommandWord commandWord = command.getCommandWord();
-        System.out.println(commandWord);
         switch (commandWord) {
+            case CommandWord.ENTER -> goRoom(command);
+            case CommandWord.BACK -> backRoom();
+            case CommandWord.INTERACT -> interact(command);
+            case TAKE -> takeItem(command);
+            case DROP -> dropItem(command);
+            case CommandWord.QUIT -> wantToQuit = quit(command);
+            case CommandWord.HELP -> printHelp();
             case CommandWord.UNKNOWN -> System.out.println("Não entendi o que você quis dizer...");
         }
 
         return wantToQuit;
     }
-
-    // implementations of user commands:
 
     /**
      * Exibe os comandos disponíveis.
@@ -96,21 +101,20 @@ public class Game {
      */
     private void goRoom(Command command) {
         if (!command.hasSecondWord()) {
-            // Exige uma segunda palavra para saber aonde ir
             System.out.println("Ir onde?");
             return;
         }
 
-        RoomType room = switch(command.getSecondWord()) {
-            case "quarto" -> RoomType.ROOM;
-            case "cozinha" -> RoomType.KITCHEN;
-            case "banheiro" -> RoomType.BATHROOM;
-            case "corredor" -> RoomType.HALLWAY;
-            case "sala" -> RoomType.LIVING_ROOM;
-            case "escadas" -> RoomType.STAIRS;
-            default -> RoomType.UNKNOWN;
-        };
+        HashMap<String, RoomType> roomTypeHashMap = new HashMap<>();
+        roomTypeHashMap.put(RoomType.ROOM.toString(), RoomType.ROOM);
+        roomTypeHashMap.put(RoomType.KITCHEN.toString(), RoomType.KITCHEN);
+        roomTypeHashMap.put(RoomType.BATHROOM.toString(), RoomType.BATHROOM);
+        roomTypeHashMap.put(RoomType.HALLWAY.toString(), RoomType.HALLWAY);
+        roomTypeHashMap.put(RoomType.LIVING_ROOM.toString(), RoomType.LIVING_ROOM);
+        roomTypeHashMap.put(RoomType.BALCONY.toString(), RoomType.BALCONY);
+        roomTypeHashMap.put(RoomType.STAIRS.toString(), RoomType.STAIRS);
 
+        RoomType room = roomTypeHashMap.get(command.getSecondWord());
         if (room == RoomType.UNKNOWN || !currentPlayer.goRoom(room)) {
             System.out.println("Isso não é um cômodo!");
         } else {
@@ -187,8 +191,45 @@ public class Game {
         }
     }
 
-    private void inventory() {
-        System.out.println("...");
+    public void interact(Command command) {
+        Scanner read = new Scanner(System.in);
+        if (!currentPlayer.getCurrentRoom().containsPhantom()) {
+            System.out.println("Não há nada para interagir aqui.");
+            return;
+        }
+
+        Phantom phantom = currentPlayer.getCurrentRoom().getPhantom();
+        System.out.println(phantom.getWhoCapture());
+
+        switch (phantom.getType()) {
+            case SMART -> {
+                System.out.println(phantom.getInteractions().getPuzzle());
+
+
+                String response = "";
+                while (!phantom.getInteractions().checkPuzzle(response)) {
+                    System.out.print("> ");
+                    response = read.nextLine();
+                    System.out.println("Você errou. Tente novamente.");
+                }
+                System.out.println("Fantasma capturado com sucesso!");
+            }
+            case FIGHTER -> {
+                // ...
+            }
+            case FAT -> {
+                System.out.println("Qual item deseja usar?");
+                System.out.print("> ");
+                String itemName = read.nextLine();
+
+                Item item = currentPlayer.useItem(itemName);
+
+                if (!phantom.getInteractions().item(item)) {
+                    System.out.println("Esse item não pode ser utilizado para capturar esse fantasma.");
+                    currentPlayer.addItem(item);
+                }
+            }
+        }
     }
 
     public static void main(String[] args) {
