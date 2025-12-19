@@ -22,6 +22,10 @@ public class Player {
         this.inventory = new HashSet<>();
     }
 
+    public String getName() {
+        return name;
+    }
+
     /**
      * Remove um item da sala atual e o adiciona ao inventário do player.
      *

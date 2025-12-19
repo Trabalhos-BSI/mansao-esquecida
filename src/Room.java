@@ -82,7 +82,7 @@ public class Room {
      * @return true, se a sala tiver um fantasma, false, se a sala não tiver um fantasma.
      */
     public boolean containsPhantom() {
-        return (phantom != null);
+        return (phantom != null) && !phantom.isCaptured();
     }
 
     public RoomType getType() {
@@ -96,6 +96,35 @@ public class Room {
             RoomType exit = exitsIterator.next();
             out += exit.toString() + (exitsIterator.hasNext() ? ", " : ".\n");
         }
+
+        if (items.isEmpty()) {
+            out += "\tNão há itens na sala.\n";
+        } else {
+            out += "\tItems: ";
+            Iterator<Item> itemsIterator = this.items.iterator();
+            while (itemsIterator.hasNext()) {
+                Item item = itemsIterator.next();
+                out += item.getName() + (itemsIterator.hasNext() ? ", " : ".\n");
+            }
+        }
+        return out;
+    }
+
+    public String getLongDescription(HashMap<String, String> replace) {
+        String out = "";
+
+        if (containsPhantom()) {
+            out += phantom.getIntroText(replace) + "\n";
+        }
+
+        out += "Você está em " + this.description + "\n\tSaídas: ";
+
+        Iterator<RoomType> exitsIterator = exits.keySet().iterator();
+        while (exitsIterator.hasNext()) {
+            RoomType exit = exitsIterator.next();
+            out += exit.toString() + (exitsIterator.hasNext() ? ", " : ".\n");
+        }
+
 
         if (items.isEmpty()) {
             out += "\tNão há itens na sala.\n";

@@ -70,4 +70,9 @@ public class Parser
         }
         System.out.println();
     }
+
+    public String getLine() {
+        System.out.print("> ");
+        return reader.nextLine();
+    }
 }
