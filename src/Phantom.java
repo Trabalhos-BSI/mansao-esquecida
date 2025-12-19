@@ -20,7 +20,7 @@ public class Phantom {
         // Configurações baseadas no tipo
         switch (type) {
             case FAT:
-                this.introText = "${playerName} entra na ${location} e escuta uma voz dizendo:  \"Vou te comer, vou te comer, vou te comer...\".";
+                this.introText = "${playerName} entra na ${room} e escuta uma voz dizendo:  \"Vou te comer, vou te comer, vou te comer...\".";
                 this.whoCapture = "Você pode capturar esse fantasma lhe dando comida.";
                 break;
             case SMART:
