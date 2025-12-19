@@ -1,7 +1,7 @@
 
 
 public enum PhantomType {
-    SMART("Inteligente"), FIGHTER("Do Bronx"), FAT("Gordo");
+    INTELLIGENT("Inteligente"), FIGHTER("Do Bronx"), FAT("Gordo");
 
     String type;
 

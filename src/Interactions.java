@@ -41,7 +41,7 @@ public class Interactions {
      * @return
      */
     public boolean checkPuzzle(String response) {
-        if (PhantomType.SMART != phantom.getType()) return false;
+        if (PhantomType.INTELLIGENT != phantom.getType()) return false;
         if (phantom.isCaptured()) return false;
         boolean result = response.equals(correctResponse);
         phantom.setCaptured(result);
@@ -49,7 +49,7 @@ public class Interactions {
     }
 
     public String getPuzzle () {
-        if (PhantomType.SMART != phantom.getType()) return "fantasma sem puzzle";
+        if (PhantomType.INTELLIGENT != phantom.getType()) return "fantasma sem puzzle";
         if (phantom.isCaptured()) return "tifu tifu tifu, quantos tifu deu?";
         return puzzle;
     }

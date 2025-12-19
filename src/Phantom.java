@@ -38,12 +38,12 @@ public class Phantom {
                 this.introText = "${playerName} entra em ${room} e escuta uma voz dizendo:  \"Vou te comer, vou te comer, vou te comer...\".";
                 this.whoCapture = "Você pode capturar esse fantasma lhe dando comida.";
                 break;
-            case SMART:
-                this.introText = "${playerName} entra em ${location} e escuta uma voz dizendo:  \"Não é a força que me mantém aqui, é o que vocês nunca conseguiram entender...\".";
+            case INTELLIGENT:
+                this.introText = "${playerName} entra em ${room} e escuta uma voz dizendo:  \"Não é a força que me mantém aqui, é o que vocês nunca conseguiram entender...\".";
                 this.whoCapture = "Você pode capturar esse fantasma resolvendo um enigma.";
                 break;
             case FIGHTER:
-                this.introText = "${playerName} entra em ${location} e escuta uma voz dizendo:  \"A luta é tudo o que restou de mim...\".";
+                this.introText = "${playerName} entra em ${room} e escuta uma voz dizendo:  \"A luta é tudo o que restou de mim...\".";
                 this.whoCapture = "Você pode capturar esse fantasma com um espelho.";
                 break;
         }
