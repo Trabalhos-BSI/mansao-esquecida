@@ -35,7 +35,7 @@ public class Mansion {
         Room stairs = new Room(RoomType.STAIRS, "...");
 
         Phantom fat = new Phantom("Mabin Joo", PhantomType.FAT, ItemType.FOOD);
-        Phantom smart = new Phantom("Enzo", PhantomType.SMART, "Qual a cor do cavalo branco de Napoleão?", "Branco");
+        Phantom smart = new Phantom("Enzo", PhantomType.INTELLIGENT, "Qual a cor do cavalo branco de Napoleão?", "Branco");
         Phantom fighter = new Phantom("Do Brox", PhantomType.FIGHTER);
 
         Item lettuce = new Item("alface", "Um alface bem verdinho", ItemType.FOOD);

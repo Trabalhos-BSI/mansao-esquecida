@@ -1,5 +1,4 @@
 import java.util.HashMap;
-import java.util.Scanner;
 
 public class Game {
     private final Parser parser;
@@ -199,7 +198,7 @@ public class Game {
         }
     }
 
-    public void interact(Command command) {
+    private void interact(Command command) {
         if (!currentPlayer.getCurrentRoom().containsPhantom()) {
             System.out.println("Não há nada para interagir aqui.");
             return;
@@ -209,7 +208,7 @@ public class Game {
         System.out.println(phantom.getWhoCapture());
 
         switch (phantom.getType()) {
-            case SMART -> {
+            case INTELLIGENT -> {
                 System.out.println(phantom.getInteractions().getPuzzle());
 
                 String response = "";
