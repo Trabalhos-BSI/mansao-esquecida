@@ -1,4 +1,4 @@
-package dev.bethinhas;
+package dev.bethinhas.map;
 
 public enum RoomType {
     HALLWAY("corredor"), ROOM("quarto"), LIVING_ROOM("sala"), BATHROOM("banheiro"), BALCONY("varanda"), KITCHEN("cozinha"), STAIRS("escada"), UNKNOWN("?");
@@ -11,5 +11,12 @@ public enum RoomType {
 
     public String toString() {
         return type;
+    }
+
+    public static RoomType from(String room) {
+        return switch (room) {
+            case "corredor" -> HALLWAY;
+            default -> UNKNOWN;
+        };
     }
 }

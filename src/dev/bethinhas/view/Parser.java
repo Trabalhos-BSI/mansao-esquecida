@@ -1,4 +1,7 @@
-package dev.bethinhas;
+package dev.bethinhas.view;
+
+import dev.bethinhas.Command;
+import dev.bethinhas.CommandWords;
 
 import java.util.Scanner;
 
@@ -33,7 +36,7 @@ public class Parser
     /**
      * @return O próximo comando do utilizador.
      */
-    public Command getCommand() 
+    public Command getCommand()
     {
         String inputLine;   // guardará a linha de entrada completa
         String word1 = null;

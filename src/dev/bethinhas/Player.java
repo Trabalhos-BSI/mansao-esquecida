@@ -1,5 +1,9 @@
 package dev.bethinhas;
 
+import dev.bethinhas.item.Item;
+import dev.bethinhas.map.Room;
+import dev.bethinhas.map.RoomType;
+
 import java.util.Iterator;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,7 +15,10 @@ public class Player {
     private Room currentRoom; // A sala atual.
     private Stack<Room> locationPath; // O caminho percorrido até a sala atual.
 
+    private Item currentItem;
     private Set<Item> inventory; // Os itens que o jogador possui
+
+    private String response;
 
     /**
      * Construtor - Inicializa um objeto de players.dev.bethinhas.Player
@@ -160,5 +167,21 @@ public class Player {
 
     public void addItem(Item item) {
         this.inventory.add(item);
+    }
+
+    public Item getCurrentItem() {
+        return currentItem;
+    }
+
+    public void setCurrentItem(Item currentItem) {
+        this.currentItem = currentItem;
+    }
+
+    public String getResponse() {
+        return response;
+    }
+
+    public void setResponse(String response) {
+        this.response = response;
     }
 }

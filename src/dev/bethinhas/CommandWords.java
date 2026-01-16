@@ -55,10 +55,7 @@ public class CommandWords
         return commandWord;
     }
 
-    /**
-     * Busca todos os comandos válidos.
-     * @return Set<String> as chaves que representam os comandos.
-     */
+    // TODO: Mover para a classe Game
     public Set<String> getCommandList() {
         return validCommands.keySet();
     }

@@ -1,13 +1,20 @@
 package dev.bethinhas;
 
+import dev.bethinhas.map.Mansion;
+import dev.bethinhas.map.Room;
+import dev.bethinhas.map.RoomType;
+import dev.bethinhas.view.Parser;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Game {
     private final Parser parser;
     private Player currentPlayer;
     private Room startRoom;
 
-    private HashMap<String, String> replace;
+    List<Command> commands;
 
     /**
      * Cria o jogo e inicia o mapa.
@@ -15,7 +22,7 @@ public class Game {
     public Game() {
         createRooms();
         parser = new Parser();
-        replace = new HashMap<>();
+        commands = new ArrayList<Command>();
     }
 
     /**
@@ -39,9 +46,6 @@ public class Game {
         currentPlayer = new Player(playerName);
         currentPlayer.setCurrentRoom(this.startRoom);
 
-        replace.put("playerName", currentPlayer.getName());
-        replace.put("room", currentPlayer.getCurrentRoom().getType().toString());
-
         this.printWelcome();
 
         boolean finished = false;
@@ -63,7 +67,7 @@ public class Game {
      * Exibe as informações do local atual do player.
      */
     private void printRoomInfo() {
-        System.out.println(currentPlayer.getCurrentRoom().getLongDescription(replace));
+        System.out.println(currentPlayer.getCurrentRoom().getLongDescription());
     }
 
     /**
@@ -126,7 +130,6 @@ public class Game {
         if (room == RoomType.UNKNOWN || !currentPlayer.goRoom(room)) {
             System.out.println("Isso não é um cômodo!");
         } else {
-            replace.put("room", currentPlayer.getCurrentRoom().getType().toString());
             printRoomInfo();
         }
     }
@@ -150,7 +153,7 @@ public class Game {
      * Exibe as informações da sala atual do player.
      */
     private void lookRoom() {
-        System.out.println(currentPlayer.getCurrentRoom().getLongDescription(replace));
+        System.out.println(currentPlayer.getCurrentRoom().getLongDescription());
     }
 
     /**
@@ -204,43 +207,6 @@ public class Game {
         if (!currentPlayer.getCurrentRoom().containsPhantom()) {
             System.out.println("Não há nada para interagir aqui.");
             return;
-        }
-
-        Phantom phantom = currentPlayer.getCurrentRoom().getPhantom();
-        System.out.println(phantom.getWhoCapture());
-
-        switch (phantom.getType()) {
-            case INTELLIGENT -> {
-                System.out.println(phantom.getInteractions().getPuzzle());
-
-                String response = "";
-                while (!phantom.getInteractions().checkPuzzle(response)) {
-                    response = parser.getLine();
-                    System.out.println("Você errou. Tente novamente.");
-                }
-                System.out.println("Fantasma capturado com sucesso!");
-            }
-            case FIGHTER -> {
-                // ...
-            }
-            case FAT -> {
-                System.out.println("Qual item deseja usar?");
-                String itemName = parser.getLine();
-
-                Item item = currentPlayer.useItem(itemName);
-
-                if (item == null) {
-                    System.out.println("dev.bethinhas.Item não encontrado.");
-                    return;
-                }
-
-                if (!phantom.getInteractions().item(item)) {
-                    System.out.println("Esse item não pode ser utilizado para capturar esse fantasma.");
-                    currentPlayer.addItem(item);
-                } else {
-                    System.out.println("O fantasma foi capturado com sucesso!");
-                }
-            }
         }
     }
 

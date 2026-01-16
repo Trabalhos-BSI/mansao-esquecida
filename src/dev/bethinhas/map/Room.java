@@ -1,4 +1,7 @@
-package dev.bethinhas;
+package dev.bethinhas.map;
+
+import dev.bethinhas.item.Item;
+import dev.bethinhas.phantom.Phantom;
 
 import java.util.Iterator;
 import java.util.HashMap;
@@ -16,13 +19,15 @@ public class Room {
     private Set<Item> items;
     private Phantom phantom;
 
-    public Room(RoomType type, String description) {
+    private boolean locked;
+
+    public Room(RoomType type, String description, boolean locked) {
         this.type = type;
         this.description = description;
+        this.locked = locked;
 
         this.exits = new HashMap<>();
         this.items = new HashSet<>();
-
     }
 
     /**
@@ -116,7 +121,7 @@ public class Room {
         String out = "";
 
         if (containsPhantom()) {
-            out += phantom.getIntroText(replace) + "\n";
+            out += phantom.getIntroText() + "\n";
         }
 
         out += "Você está em " + this.description + "\n\tSaídas: ";
@@ -147,5 +152,21 @@ public class Room {
 
     public void setPhantom(Phantom phantom) {
         this.phantom = phantom;
+    }
+
+    public boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
+    }
+
+    public void lock() {
+        this.locked = true;
+    }
+
+    public void unlock() {
+        this.locked = false;
     }
 }

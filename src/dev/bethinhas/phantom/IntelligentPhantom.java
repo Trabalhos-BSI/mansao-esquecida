@@ -9,11 +9,11 @@ public class IntelligentPhantom extends Phantom {
     private String puzzleDescription;
     private List<String> puzzleResponses;
 
-    public IntelligentPhantom(String name, String introText, String whoCapture, String puzzleDescription, List<String> puzzleResponse) {
+    public IntelligentPhantom(String name, String introText, String whoCapture, String puzzleDescription, List<String> puzzleResponses) {
         super(name, introText, whoCapture);
 
         this.puzzleDescription = puzzleDescription;
-        this.puzzleResponse = puzzleResponse;
+        this.puzzleResponses = puzzleResponses;
     }
 
     public String getPuzzleDescription() {
@@ -24,12 +24,12 @@ public class IntelligentPhantom extends Phantom {
         this.puzzleDescription = puzzleDescription;
     }
 
-    public String getPuzzleResponse() {
-        return puzzleResponse;
+    public List<String> getPuzzleResponse() {
+        return puzzleResponses;
     }
 
-    public void setPuzzleResponse(String puzzleResponse) {
-        this.puzzleResponse = puzzleResponse;
+    public void setPuzzleResponse(List<String> puzzleResponses) {
+        this.puzzleResponses = puzzleResponses;
     }
 
     @Override
