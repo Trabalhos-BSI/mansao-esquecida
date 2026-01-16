@@ -1,16 +1,13 @@
-package dev.bethinhas.command;
+package dev.bethinhas.action;
 
 import dev.bethinhas.Player;
 import dev.bethinhas.map.RoomType;
 
-public class EnterCommand extends Command {
-    public EnterCommand(String commandWord) {
-        super(commandWord);
-    }
+public class EnterAction extends Action {
 
     @Override
-    public void run(Player player) {
-        String roomName = player.getResponse();
+    public void execute(Player player) {
+        String roomName = player.getInput();
         if (roomName.isEmpty()) throw new RuntimeException();
 
         RoomType roomType = RoomType.from(roomName);

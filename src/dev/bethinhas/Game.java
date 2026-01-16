@@ -1,20 +1,20 @@
 package dev.bethinhas;
 
+import dev.bethinhas.action.Action;
 import dev.bethinhas.map.Mansion;
 import dev.bethinhas.map.Room;
 import dev.bethinhas.map.RoomType;
 import dev.bethinhas.view.Parser;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
 
 public class Game {
     private final Parser parser;
     private Player currentPlayer;
     private Room startRoom;
 
-    List<Command> commands;
+    private Mansion mansion;
 
     /**
      * Cria o jogo e inicia o mapa.
@@ -22,7 +22,7 @@ public class Game {
     public Game() {
         createRooms();
         parser = new Parser();
-        commands = new ArrayList<Command>();
+        mansion = new Mansion();
     }
 
     /**
@@ -37,21 +37,20 @@ public class Game {
      * dev.bethinhas.Game Loop.
      */
     public void play() {
-        Mansion mansion = new Mansion();
-        startRoom = mansion.getInitialRoom();
+        this.startRoom = this.mansion.getInitialRoom();
 
         System.out.println("Digite o nome do jogador: ");
-        String playerName = parser.getLine();
+        String playerName = parser.getInput();
 
-        currentPlayer = new Player(playerName);
-        currentPlayer.setCurrentRoom(this.startRoom);
+        this.currentPlayer = new Player(playerName);
+        this.currentPlayer.setCurrentRoom(this.startRoom);
 
         this.printWelcome();
 
         boolean finished = false;
         while (!finished) {
-            Command command = parser.getCommand();
-            finished = processCommand(command);
+            String input = parser.getInput();
+            finished = processInput(input);
         }
         System.out.println("Obrigado por jogar!");
     }
@@ -70,27 +69,9 @@ public class Game {
         System.out.println(currentPlayer.getCurrentRoom().getLongDescription());
     }
 
-    /**
-     * Recebe um comando e processa o mesmo.
-     *
-     * @param command O comando a ser processado.
-     * @return true se o comando for de saída e false para os demais.
-     */
-    private boolean processCommand(Command command) {
-        boolean wantToQuit = false;
 
-        CommandWord commandWord = command.getCommandWord();
-        switch (commandWord) {
-            case ENTER -> goRoom(command);
-            case BACK -> backRoom();
-            case INTERACT -> interact(command);
-            case TAKE -> takeItem(command);
-            case DROP -> dropItem(command);
-            case LOOK -> lookRoom();
-            case QUIT -> wantToQuit = quit(command);
-            case HELP -> printHelp();
-            case UNKNOWN -> System.out.println("Não entendi o que você quis dizer...");
-        }
+    private boolean processInput(String input) {
+        boolean wantToQuit = false;
 
         return wantToQuit;
     }

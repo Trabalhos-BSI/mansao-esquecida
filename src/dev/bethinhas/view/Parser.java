@@ -1,8 +1,9 @@
 package dev.bethinhas.view;
 
-import dev.bethinhas.Command;
-import dev.bethinhas.CommandWords;
+import dev.bethinhas.action.Action;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -20,63 +21,21 @@ import java.util.Scanner;
  * @version 2008.03.30
  */
 public class Parser 
-{
-    private CommandWords commands;  // guarda todas as palavras de comando válidas
+{ // guarda todas as palavras de comando válidas
     private Scanner reader;         // origem da entrada de comandos
+
+    private Map<String, Action> actions;
 
     /**
      * Cria um analisador para ler da janela do terminal.
      */
     public Parser() 
     {
-        commands = new CommandWords();
         reader = new Scanner(System.in);
+        actions = new HashMap<>();
     }
 
-    /**
-     * @return O próximo comando do utilizador.
-     */
-    public Command getCommand()
-    {
-        String inputLine;   // guardará a linha de entrada completa
-        String word1 = null;
-        String word2 = null;
-
-        System.out.print("> ");     // inicializa o prompt
-
-        inputLine = reader.nextLine();
-
-        // Encontra até duas palavras na linha.
-        Scanner tokenizer = new Scanner(inputLine);
-        if(tokenizer.hasNext()) {
-            word1 = tokenizer.next();      // obtém a primeira palavra
-            if(tokenizer.hasNext()) {
-                word2 = tokenizer.next();      // obtém a segunda palavra
-            }
-        }
-        tokenizer.close();
-        
-        // Agora verifica se esta palavra é conhecida. Se for, cria um comando
-        // com ela. Se não, cria um comando "null" (para comando desconhecido).
-        if(commands.isCommand(word1)) {
-            return new Command(word1, word2);
-        }
-        else {
-            return new Command(null, word2);
-        }
-    }
-    
-    /**
-     * Exibe os comandos.
-     */
-    public void showCommands() {
-        for (String command : commands.getCommandList()) {
-            System.out.print(command + " ");
-        }
-        System.out.println();
-    }
-
-    public String getLine() {
+    public String getInput() {
         System.out.print("> ");
         return reader.nextLine();
     }

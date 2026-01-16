@@ -18,7 +18,7 @@ public class Player {
     private Item currentItem;
     private Set<Item> inventory; // Os itens que o jogador possui
 
-    private String response;
+    private String input;
 
     /**
      * Construtor - Inicializa um objeto de players.dev.bethinhas.Player
@@ -177,11 +177,11 @@ public class Player {
         this.currentItem = currentItem;
     }
 
-    public String getResponse() {
-        return response;
+    public String getInput() {
+        return input;
     }
 
-    public void setResponse(String response) {
-        this.response = response;
+    public void setInput(String input) {
+        this.input = input;
     }
 }

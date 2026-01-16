@@ -36,7 +36,7 @@ public class IntelligentPhantom extends Phantom {
     public void interact(Player player) {
         if (this.isCaptured()) throw new RuntimeException("O fantasma já está capturado.");
 
-        String response = player.getResponse();
+        String response = player.getInput();
 
         if (response == null) throw new RuntimeException("A resposta não pode ser nula.");
 
