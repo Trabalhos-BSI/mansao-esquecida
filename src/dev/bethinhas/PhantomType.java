@@ -1,4 +1,4 @@
-
+package dev.bethinhas;
 
 public enum PhantomType {
     INTELLIGENT("Inteligente"), FIGHTER("Do Bronx"), FAT("Gordo");

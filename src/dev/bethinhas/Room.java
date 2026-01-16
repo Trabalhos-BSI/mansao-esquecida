@@ -1,3 +1,5 @@
+package dev.bethinhas;
+
 import java.util.Iterator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -62,7 +64,7 @@ public class Room {
      * É usado quando o jogador "pega" o item.
      *
      * @param name O nome do item a procurar.
-     * @return O objeto items.Item se for encontrado, ou null se não existir.
+     * @return O objeto items.dev.bethinhas.Item se for encontrado, ou null se não existir.
      */
     public Item getItem(String name) {
         Iterator<Item> itemsIterator = items.iterator();

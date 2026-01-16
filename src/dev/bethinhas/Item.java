@@ -1,3 +1,4 @@
+package dev.bethinhas;
 
 /**
  * @author Enzo

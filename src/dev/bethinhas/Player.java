@@ -1,3 +1,5 @@
+package dev.bethinhas;
+
 import java.util.Iterator;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,7 +14,7 @@ public class Player {
     private Set<Item> inventory; // Os itens que o jogador possui
 
     /**
-     * Construtor - Inicializa um objeto de players.Player
+     * Construtor - Inicializa um objeto de players.dev.bethinhas.Player
      *
      * @param name o nome do jogador
      */

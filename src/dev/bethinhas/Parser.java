@@ -1,3 +1,5 @@
+package dev.bethinhas;
+
 import java.util.Scanner;
 
 /**
@@ -6,7 +8,7 @@ import java.util.Scanner;
  * * Este analisador (parser) lê a entrada do utilizador e tenta interpretá-la como um
  * comando de "Aventura". Cada vez que é chamado, ele lê uma linha do terminal e
  * tenta interpretar a linha como um comando de duas palavras. Ele retorna o comando
- * como um objeto da classe commands.Command.
+ * como um objeto da classe commands.dev.bethinhas.Command.
  *
  * O analisador tem um conjunto de palavras de comando conhecidas. Ele verifica a entrada
  * do utilizador em relação aos comandos conhecidos e, se a entrada não for um dos comandos

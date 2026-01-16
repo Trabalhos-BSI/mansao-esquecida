@@ -1,5 +1,7 @@
+package dev.bethinhas;
+
 public enum ItemType {
-    FOOD("Comida"), KEY("Chave"), DIARY("Carta"), PICTURE("Foto");
+    FOOD("Comida"), KEY("Chave"), DIARY("Carta"), PICTURE("Foto"), UNKNOWN("?");
 
     String type;
 

@@ -35,7 +35,7 @@ Responsável: Cleber
 O pacote de disputas é responsável por desenvolver os cenários de disputa 
 com os fantasmas.
 
-## `Game`
+## `dev.bethinhas.Game`
 Responsável: Jonathan
 
-O Game tem a função de integrar todas os demais pacotes e classes.
+O dev.bethinhas.Game tem a função de integrar todas os demais pacotes e classes.

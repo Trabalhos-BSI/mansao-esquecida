@@ -1,3 +1,5 @@
+package dev.bethinhas;
+
 public enum CommandWord {
     ENTER("entre"), BACK("voltar"), INTERACT("interagir"), HELP("ajuda"), TAKE("pegar"), DROP("largar"), LOOK("olhar"), QUIT("sair"), UNKNOWN("?");
 

@@ -1,3 +1,5 @@
+package dev.bethinhas;
+
 public class Interactions {
     private Phantom phantom;
 
@@ -22,7 +24,7 @@ public class Interactions {
     }
 
     /**
-     * Interação com Item
+     * Interação com dev.bethinhas.Item
      * @param item
      * @return
      */

@@ -1,3 +1,5 @@
+package dev.bethinhas;
+
 import java.util.HashMap;
 import java.util.Set;
 
@@ -43,7 +45,7 @@ public class CommandWords
     /**
      * Busca um comando no mapa de comandos.
      * @param commandString O comando que deseja buscar
-     * @return commands.CommandWord o Enum referente ao comando
+     * @return commands.dev.bethinhas.CommandWord o Enum referente ao comando
      */
     public CommandWord getCommand(String commandString) {
         CommandWord commandWord = validCommands.get(commandString);

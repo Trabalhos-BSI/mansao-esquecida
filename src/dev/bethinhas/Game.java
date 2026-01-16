@@ -1,3 +1,5 @@
+package dev.bethinhas;
+
 import java.util.HashMap;
 
 public class Game {
@@ -25,7 +27,7 @@ public class Game {
     }
 
     /**
-     * Game Loop.
+     * dev.bethinhas.Game Loop.
      */
     public void play() {
         Mansion mansion = new Mansion();
@@ -228,7 +230,7 @@ public class Game {
                 Item item = currentPlayer.useItem(itemName);
 
                 if (item == null) {
-                    System.out.println("Item não encontrado.");
+                    System.out.println("dev.bethinhas.Item não encontrado.");
                     return;
                 }
 
