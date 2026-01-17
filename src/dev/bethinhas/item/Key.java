@@ -1,24 +1,24 @@
 package dev.bethinhas.item;
 
-import dev.bethinhas.map.Room;
+import dev.bethinhas.map.Location;
 
 public class Key extends Item {
-    private Room room;
+    private Location location;
 
-    public Key(String name, String description, Room room) {
+    public Key(String name, String description, Location location) {
         super(name, description);
-        this.room = room;
+        this.location = location;
     }
 
-    public Room getRoom() {
-        return room;
+    public Location getLocation() {
+        return location;
     }
 
-    public void setRoom(Room room) {
-        this.room = room;
+    public void setRoom(Location location) {
+        this.location = location;
     }
 
     public void unlock() {
-        this.room.unlock();
+        this.location.setLocked(false);
     }
 }

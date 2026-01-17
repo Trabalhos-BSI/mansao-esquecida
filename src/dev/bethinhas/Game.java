@@ -1,194 +1,73 @@
 package dev.bethinhas;
 
-import dev.bethinhas.action.Action;
+import dev.bethinhas.command.*; // Importa seus comandos
+import dev.bethinhas.map.Location;
 import dev.bethinhas.map.Mansion;
-import dev.bethinhas.map.Room;
-import dev.bethinhas.map.RoomType;
 import dev.bethinhas.view.Parser;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Game {
     private final Parser parser;
+    private final CommandRegistry commandRegistry; // Nova peça
+    private final Mansion mansion;
+
     private Player currentPlayer;
-    private Room startRoom;
+    private Location startLocation;
 
-    private Mansion mansion;
-
-    /**
-     * Cria o jogo e inicia o mapa.
-     */
     public Game() {
+        this.mansion = new Mansion();
+        this.parser = new Parser();
+        this.commandRegistry = new CommandRegistry();
+
         createRooms();
-        parser = new Parser();
-        mansion = new Mansion();
     }
 
-    /**
-     * Cria as salas definindo suas saídas.
-     * Define a sala inicial que guarda a referência para outras salas.
-     */
     private void createRooms() {
-        this.startRoom = null;
+        this.startLocation = this.mansion.getInitialLocation();
     }
 
-    /**
-     * dev.bethinhas.Game Loop.
-     */
     public void play() {
-        this.startRoom = this.mansion.getInitialRoom();
+        this.startLocation = this.mansion.getInitialLocation();
+        createPlayer();
+        printWelcome();
 
-        System.out.println("Digite o nome do jogador: ");
-        String playerName = parser.getInput();
+        while (true) {
+            String fullLine = parser.readLine();
+            if (fullLine.isBlank()) continue;
 
-        this.currentPlayer = new Player(playerName);
-        this.currentPlayer.setCurrentRoom(this.startRoom);
+            List<String> parts = new ArrayList<>(List.of(fullLine.split(" ")));
+            String commandWord = parts.removeFirst();
+            String argument = parts.stream().collect(Collectors.joining(" ", "", ""));
+            currentPlayer.setInput(argument);
 
-        this.printWelcome();
+            Command command = commandRegistry.getCommand(commandWord);
 
-        boolean finished = false;
-        while (!finished) {
-            String input = parser.getInput();
-            finished = processInput(input);
+            if (command != null) {
+                command.execute(currentPlayer, argument);
+            } else {
+                System.out.println("Não entendi o que é '" + commandWord + "'...");
+            }
         }
-        System.out.println("Obrigado por jogar!");
     }
 
-    /**
-     * Exibe a mensagem de abertura
-     */
+    private void createPlayer() {
+        System.out.println("Digite o nome do jogador: ");
+        String fullLine = parser.readLine();
+        if (fullLine.isBlank()) throw new RuntimeException();
+
+        this.currentPlayer = new Player(fullLine);
+        this.currentPlayer.setCurrentLocation(this.startLocation);
+    }
+
     private void printWelcome() {
         printRoomInfo();
     }
 
-    /**
-     * Exibe as informações do local atual do player.
-     */
     private void printRoomInfo() {
-        System.out.println(currentPlayer.getCurrentRoom().getLongDescription());
-    }
-
-
-    private boolean processInput(String input) {
-        boolean wantToQuit = false;
-
-        return wantToQuit;
-    }
-
-    /**
-     * Exibe os comandos disponíveis.
-     */
-    private void printHelp() {
-        System.out.println("...");
-        System.out.println("...");
-        System.out.println();
-        System.out.println("Os comandos disponíveis são:");
-        System.out.print("\t");
-        parser.showCommands();
-    }
-
-    /**
-     * Tenta ir em uma direção, se existir uma sala,
-     * o player entra, caso contrário exibe uma mensagem de erro.
-     */
-    private void goRoom(Command command) {
-        if (!command.hasSecondWord()) {
-            System.out.println("Ir onde?");
-            return;
-        }
-
-        HashMap<String, RoomType> roomTypeHashMap = new HashMap<>();
-        roomTypeHashMap.put(RoomType.ROOM.toString(), RoomType.ROOM);
-        roomTypeHashMap.put(RoomType.KITCHEN.toString(), RoomType.KITCHEN);
-        roomTypeHashMap.put(RoomType.BATHROOM.toString(), RoomType.BATHROOM);
-        roomTypeHashMap.put(RoomType.HALLWAY.toString(), RoomType.HALLWAY);
-        roomTypeHashMap.put(RoomType.LIVING_ROOM.toString(), RoomType.LIVING_ROOM);
-        roomTypeHashMap.put(RoomType.BALCONY.toString(), RoomType.BALCONY);
-        roomTypeHashMap.put(RoomType.STAIRS.toString(), RoomType.STAIRS);
-
-        RoomType room = roomTypeHashMap.get(command.getSecondWord());
-        if (room == RoomType.UNKNOWN || !currentPlayer.goRoom(room)) {
-            System.out.println("Isso não é um cômodo!");
-        } else {
-            printRoomInfo();
-        }
-    }
-
-    /**
-     * Verifica o restante do comando para saber se o usuário realmente quer sair.
-     *
-     * @return true, se o comando for saída, caso contrário, false.
-     */
-    private boolean quit(Command command) {
-        if (command.hasSecondWord()) {
-            System.out.println("Quer realmente sair?");
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-
-    /**
-     * Exibe as informações da sala atual do player.
-     */
-    private void lookRoom() {
-        System.out.println(currentPlayer.getCurrentRoom().getLongDescription());
-    }
-
-    /**
-     * Volta salas conforme os locais que o player passou
-     */
-    private void backRoom() {
-        if (currentPlayer.backRoom()) {
-            printRoomInfo();
-        } else {
-            System.out.println("Não há salas para voltar.");
-        }
-    }
-
-    /**
-     * Pega um item na sala que o player está.
-     *
-     * @param command O comando para processar o item.
-     */
-    private void takeItem(Command command) {
-        String itemName = command.getSecondWord();
-        if (itemName == null) {
-            return;
-        }
-
-        if (!currentPlayer.takeItem(itemName)) {
-            System.out.println("...");
-        } else {
-            System.out.println("Você pegou " + itemName);
-        }
-    }
-
-    /**
-     * Solta um item na sala que o player está.
-     *
-     * @param command O comando para processar o item.
-     */
-    private void dropItem(Command command) {
-        String itemName = command.getSecondWord();
-        if (itemName == null) {
-            return;
-        }
-
-        if (!currentPlayer.dropItem(itemName)) {
-            System.out.println("...");
-        } else {
-            System.out.println(itemName + " foi largado em " + currentPlayer.getCurrentRoom().getType().toString());
-        }
-    }
-
-    private void interact(Command command) {
-        if (!currentPlayer.getCurrentRoom().containsPhantom()) {
-            System.out.println("Não há nada para interagir aqui.");
-            return;
-        }
+        System.out.println(currentPlayer.getCurrentLocation().getLocationInfo());
     }
 
     public static void main(String[] args) {

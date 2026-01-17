@@ -3,11 +3,11 @@ package dev.bethinhas.phantom;
 import dev.bethinhas.Player;
 
 public abstract class Phantom {
-    protected String name;
+    private String name;
 
-    protected boolean captured;
-    protected String introText;
-    protected String whoCapture;
+    private boolean captured;
+    private String introText;
+    private String whoCapture;
 
     public Phantom(String name, String introText, String whoCapture) {
         this.name = name;

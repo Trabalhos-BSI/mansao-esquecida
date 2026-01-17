@@ -4,15 +4,25 @@ import dev.bethinhas.Player;
 import dev.bethinhas.item.Food;
 import dev.bethinhas.item.Item;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FatPhantom extends Phantom {
     private List<String> itemsNamesForCapture;
+    private List<String> publicItemsNamesForCapture;
 
     public FatPhantom(String name, String introText, String whoCapture, List<String> itemsNamesForCapture) {
         super(name, introText, whoCapture);
 
-        this.itemsNamesForCapture = itemsNamesForCapture;
+        this.publicItemsNamesForCapture = itemsNamesForCapture;
+        this.itemsNamesForCapture = new ArrayList<>(publicItemsNamesForCapture);
+
+        for (String itemName : publicItemsNamesForCapture) {
+            this.itemsNamesForCapture.add(itemName);
+            this.itemsNamesForCapture.add(itemName.toLowerCase());
+            this.itemsNamesForCapture.add(itemName.toUpperCase());
+            this.itemsNamesForCapture.add(itemName.trim());
+        }
     }
 
     public List<String> getItemsNamesForCapture() {
@@ -25,14 +35,13 @@ public class FatPhantom extends Phantom {
 
     @Override
     public void interact(Player player) {
-        Item item = player.getCurrentItem();
-        if (item == null) throw new RuntimeException("O item não pode ser nulo.");
-        if (!(item instanceof Food food)) throw new RuntimeException("O item deve ser uma comida.");
-
         if (this.isCaptured()) throw new RuntimeException("O fantasma já está capturado.");
 
-        if (this.itemsNamesForCapture.contains(food.getName())) {
+        System.out.println("Qual item deseja usar para capturar o fantasma?");
+        String response = player.getResponse();
+        if (this.itemsNamesForCapture.contains(response)) {
             this.setCaptured(true);
+            player.removeItem(response);
         }
     }
 }
