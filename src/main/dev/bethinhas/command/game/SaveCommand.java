@@ -17,7 +17,6 @@ public class SaveCommand implements Command {
     @Override
     public CommandResult execute(Player player, String argument) {
         Save saveState = new Save(game.getMansion(), player);
-
         SaveManager.saveGame(saveState);
         return new CommandResult(true, "Jogo salvo com sucesso.");
     }

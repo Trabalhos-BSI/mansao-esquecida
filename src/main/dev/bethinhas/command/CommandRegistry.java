@@ -1,6 +1,8 @@
 package main.dev.bethinhas.command;
 
+import main.dev.bethinhas.Game;
 import main.dev.bethinhas.command.game.QuitCommand;
+import main.dev.bethinhas.command.game.SaveCommand;
 import main.dev.bethinhas.command.location.LookCommand;
 import main.dev.bethinhas.command.location.UnlockCommand;
 import main.dev.bethinhas.command.phantom.CaptureCommand;
@@ -15,8 +17,7 @@ import java.util.Set;
 
 public class CommandRegistry {
     private final Map<String, Command> commands = new HashMap<>();
-
-    public CommandRegistry() {
+    public CommandRegistry(Game game) {
         registerCommand(new EnterCommand(), "entre", "ir", "entrar", "vá", "va");
         registerCommand(new BackCommand(), "voltar", "volte");
 
@@ -29,6 +30,8 @@ public class CommandRegistry {
         registerCommand(new CaptureCommand(), "capturar");
 
         registerCommand(new UnlockCommand(), "destrancar");
+
+        registerCommand(new SaveCommand(game), "salvar", "save");
 
         registerCommand(new QuitCommand(), "sair");
 

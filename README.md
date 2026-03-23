@@ -4,12 +4,17 @@
 
 ## Sobre o Projeto
 
-**A Mansão Esquecida** é um jogo de aventura em texto (Text-Based Adventure) desenvolvido em Java. O jogador assume o
-papel de um investigador paranormal que deve explorar a antiga mansão da família Bakers, palco de uma tragédia brutal em
-1970.
+**A Mansão Esquecida** é um jogo de aventura em texto (Text-Based Adventure) desenvolvido em Java. O jogador assume o papel de um investigador paranormal que deve explorar a antiga mansão da família Bakers, palco de uma tragédia brutal em 1970.
 
-O objetivo é explorar os cômodos, coletar pistas, resolver enigmas e capturar as almas atormentadas que ainda habitam o
-local. O jogo foca em imersão narrativa, utilização de comandos via terminal e resolução de puzzles.
+O objetivo é explorar os cômodos, coletar pistas, resolver enigmas e capturar as almas atormentadas que ainda habitam o local. O jogo foca em imersão narrativa, utilização de comandos via terminal e resolução de puzzles.
+
+## Desenvolvido por
+- Athos Alves Matos de Souza
+- Cleber Borges Moreira Filho
+- Davi Vinicius de Jesus Oliveira
+- Enzo Theodoro Giovani
+- Guilherme Augusto Silva Rodrigues
+- Jonathan Gustavo de Oliveira Santos
 
 ---
 
@@ -17,24 +22,18 @@ local. O jogo foca em imersão narrativa, utilização de comandos via terminal 
 
 Este projeto foi desenvolvido aplicando conceitos sólidos de Orientação a Objetos e Padrões de Projeto:
 
-* **Padrão Command:** Utilizado para processar as ações do jogador (`ir`, `pegar`, `salvar`), permitindo fácil extensão
-  de novos comandos.
-* **Persistência de Dados (Save/Load):** Implementação de serialização nativa do Java para salvar o estado completo do
-  jogo (inventário, posição, estado dos fantasmas).
-* **Polimorfismo:** Diferentes tipos de Fantasmas (`Fighter`, `Intelligent`, `Fat`) e Itens, cada um com comportamentos
-  únicos de interação.
-* **Java Records:** Utilização de `Records` para transporte imutável de dados entre a lógica de comando e a interface do
-  usuário.
-* **Interface Híbrida:** O jogo roda no terminal, mas utiliza `Swing` para exibir popups visuais de itens especiais (
-  como fotos e pistas).
+* **Padrão Command:** Utilizado para processar as ações do jogador (`ir`, `pegar`, `salvar`), permitindo fácil extensão de novos comandos.
+* **Persistência de Dados (Save/Load):** Implementação de serialização nativa do Java para salvar o estado completo do jogo (inventário, posição, estado dos fantasmas).
+* **Polimorfismo:** Diferentes tipos de Fantasmas (`Fighter`, `Intelligent`, `Fat`) e Itens, cada um com comportamentos únicos de interação.
+* **Java Records:** Utilização de `Records` para transporte imutável de dados entre a lógica de comando e a interface do usuário.
+* **Interface Híbrida:** O jogo roda no terminal, mas utiliza `Swing` para exibir popups visuais de itens especiais (como fotos e pistas).
 
 ---
 
 ## Como Jogar
 
 O jogo é controlado via linha de comando.
-Para interagir com o mundo de Bethinhas, utilize os comandos abaixo no terminal. O jogo entende o comando principal e
-diversas variações (sinônimos).
+Para interagir com o mundo de Bethinhas, utilize os comandos abaixo no terminal. O jogo entende o comando principal e diversas variações (sinônimos).
 
 ### Movimentação e Exploração
 

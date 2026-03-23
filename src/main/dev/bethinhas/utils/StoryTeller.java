@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 public class StoryTeller {
     public void playIntro(String filename, String playerName) {
         try {
-            InputStream is = getClass().getResourceAsStream("/main/resources/" + filename);
+            InputStream is = getClass().getResourceAsStream("/main/resources/story/" + filename);
 
             if (is == null) {
                 return;
